@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Message {
 	
@@ -18,7 +20,14 @@ public class Message {
 	}
 	
 	
-	
+	@SuppressWarnings("unused")
+	private TextComponent createComponent(ChatColor color, String text, String cmd) {
+		TextComponent tc = new TextComponent();
+		tc.setColor(color);
+		tc.setText("[" + text + "] ");
+		tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd));
+		return tc;
+	}
 	
 	
 	
