@@ -28,14 +28,14 @@ public class DirectMessage extends Command{
 //	static BaseComponent[] send = new ComponentBuilder("&aNACHRICHT | &7Du &6➜ &7 %target &a»&7 %msg").create();
 //	static BaseComponent[] recieved = new ComponentBuilder("&aNACHRICHT | &7 %sender &6➜ &7Du &a» &7 %msg").create();
 
-	
-	static BaseComponent[] error_playeroffline(String target) {	return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&c"+ target + " ist nicht Online.")).create(); }
-	static BaseComponent[] error_nofriends(String target) {	return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&c"+ target +" ist nicht dein Freund.")).create(); }
+	// TODO: MOVE THIS TO Nessage.java
+	static BaseComponent[] error_playeroffline(String target) {	return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&c%target% ist nicht Online.".replaceAll("%target%", target))).create(); }
+	static BaseComponent[] error_nofriends(String target) {	return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&c%target% ist nicht dein Freund.".replaceAll("%target%", target))).create(); }
 	static BaseComponent[] error_selfmessage(){ return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&cDu kannst dir nicht selbst Nachrichten senden.")).create(); }
 	static BaseComponent[] error_notaplayer(){ return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&cDu musst ein Spieler sein um dies zu tun.")).create(); }
 
-	static BaseComponent[] send(String target, String msg) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&aNACHRICHT &8|&7 Du &6> &7"+target+"&a:&7 "+msg)).create(); }
-	static BaseComponent[] recieved(String sender, String msg) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&aNACHRICHT &8|&7 "+sender+" &6> &7Du&a:&7 "+msg)).create();	}
+	static BaseComponent[] send(String target, String msg) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&aNACHRICHT &8|&7 Du &6> &7%target%&a:&7 ".replaceAll("%target%", target)+msg)).create(); }
+	static BaseComponent[] recieved(String sender, String msg) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&aNACHRICHT &8|&7 %sender% &6> &7Du&a:&7 ".replaceAll("%sender%", sender)+msg)).create();	}
 
 	
 	public static ArrayList<ProxiedPlayer> placeholder_friendlist = new ArrayList<ProxiedPlayer>();
