@@ -5,7 +5,6 @@ import eu.crackscout.partynfriends.handlers.Party;
 import eu.crackscout.partynfriends.utils.Message;
 import eu.crackscout.partynfriends.utils.PartyManager;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -15,11 +14,6 @@ public class PartyMessage extends Command{
 	
 	public PartyMessage(Main plugin) { super("p"); this.plugin = plugin; }
 
-	static BaseComponent[] partyNone = Message.party_noParty();
-	static BaseComponent[] partyMessageToShort = Message.enterMsg();
-	
-
-
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		if(!(sender instanceof ProxiedPlayer)) {
@@ -27,11 +21,11 @@ public class PartyMessage extends Command{
 		}
 		ProxiedPlayer player = (ProxiedPlayer)sender;
 		if(!this.plugin.getPartyManager().isInParty(player)) {
-			PartyManager.getInstance().sendMessage(player, partyNone);
+			PartyManager.getInstance().sendMessage(player, Message.party_noParty());
 			return;
 		}
 		if (args.length == 0) {
-			PartyManager.getInstance().sendMessage(player, partyMessageToShort);
+			PartyManager.getInstance().sendMessage(player, Message.enterMsg());
 			return;
 		}
 		Party party = this.plugin.getPartyManager().getPartyPlayers().get(player);
@@ -48,7 +42,6 @@ public class PartyMessage extends Command{
 		this.plugin.getPartyManager().sendMessage(player, Message.party_msgSend(message));
 	}
 }
-
 
 /** 
  *

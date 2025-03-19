@@ -13,15 +13,12 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public class Main extends Plugin {
 	
-
-	
 	// Instances 
 	private PartyManager partyManager;
 	public PartyManager getPartyManager() { return this.partyManager; }
 	
 	private Message message;
 	public Message getMessage() { return this.message; }
-	
 	
 	void initCommands() {
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, (Command)new Friends(this));		
@@ -37,8 +34,6 @@ public class Main extends Plugin {
 		// no Listeners yet
 	}
 	
-	
-	
 	@Override
 	public void onEnable() {
 		initCommands();
@@ -49,8 +44,6 @@ public class Main extends Plugin {
 	}
 	
 }
-
-
 
 
 /** 

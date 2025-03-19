@@ -43,6 +43,7 @@ public class PartyManager {
 	
 	
 	
+	//----------------------------------------------------------------------------------------------------------------//
 	
 	public static PartyManager getInstance() { if (instance == null) { instance = new PartyManager(); }	return instance; }
 }

@@ -107,7 +107,6 @@ public class Party{
 	}
 }
 
-
 /** 
  *
  * @author Joel Rzepka - crackscout.de
