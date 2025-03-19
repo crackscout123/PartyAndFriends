@@ -4,6 +4,7 @@ import eu.crackscout.partynfriends.Main;
 import eu.crackscout.partynfriends.handlers.Party;
 import eu.crackscout.partynfriends.utils.Message;
 import eu.crackscout.partynfriends.utils.PartyManager;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -45,7 +46,7 @@ public class PartyCommand extends Command{
 				Party party = this.plugin.getPartyManager().getPartyPlayers().get(player);
 				PartyManager.getInstance().sendMessage(player, partyPlayerList);
 				for (ProxiedPlayer member : party.getPlayers()) {
-					PartyManager.getInstance().sendMessage(player, "§7- " + member.getName());
+					PartyManager.getInstance().sendMessage(player, ChatColor.GRAY+"- " + member.getName());
 				}
 				return;
 			}

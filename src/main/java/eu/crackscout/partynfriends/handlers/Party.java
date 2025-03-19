@@ -8,7 +8,6 @@ import eu.crackscout.partynfriends.utils.Message;
 import eu.crackscout.partynfriends.utils.PartyManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -47,15 +46,7 @@ public class Party{
 	public void setOwner(ProxiedPlayer player) { this.owner = player; }
 	
 	public List<ProxiedPlayer> getPlayers() { return this.players; }
-	
-	private TextComponent createComponent(ChatColor color, String text, String cmd) {
-		TextComponent tc = new TextComponent();
-		tc.setColor(color);
-		tc.setText("[" + text + "] ");
-		tc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd));
-		return tc;
-	}
-	
+		
 	public void chatToParty(Party party, String message) {
 		for (ProxiedPlayer member : party.getPlayers()) { PartyManager.getInstance().sendMessage(member, message); }
 	}
@@ -96,10 +87,11 @@ public class Party{
 			PartyManager.getInstance().sendMessage(player, Message.party_maxPlayer());
 			return;
 		}
-		TextComponent acceptTc = createComponent(ChatColor.DARK_GREEN, "ANNEHMEN", "/party accept");
-		TextComponent denyTc = createComponent(ChatColor.RED, "ABLEHNEN", "/party deny");
-		TextComponent tc = new TextComponent(Message.party_targetInvited(owner.getName()));
+		TextComponent acceptTc = Message.getInstance().createComponent(Message.party_ACCEPT(), "/party accept");
+		TextComponent denyTc = Message.getInstance().createComponent(Message.party_DENY(), "/party deny");
+		TextComponent tc = new TextComponent(Message.party_targetInvited(owner.getName()) + "\n");
 		tc.addExtra(acceptTc);
+		tc.addExtra(ChatColor.GRAY + " - ");
 		tc.addExtra(denyTc);
 		
 		PartyManager.getInstance().sendMessage(player, tc);
