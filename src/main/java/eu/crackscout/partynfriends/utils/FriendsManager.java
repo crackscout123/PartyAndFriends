@@ -12,6 +12,48 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class FriendsManager {
+		
+	public static List<String> getOpenFriendRequests(String playerUUID) {
+	    List<String> openRequests = new ArrayList<>();
+	    String sql = "SELECT sender_uuid FROM friend_requests WHERE receiver_uuid = ? AND status = 'pending'";
+
+	    try (Connection conn = DatabaseManager.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        stmt.setString(1, playerUUID);
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            openRequests.add(rs.getString("sender_uuid"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return openRequests;
+	}
+
+	public static boolean deleteFriendRequest(String senderUuid, String receiverUuid) {
+	    String deleteQuery = "DELETE FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
+
+	    try (Connection conn = DatabaseManager.getConnection();
+	         PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
+
+	        deleteStmt.setString(1, senderUuid);
+	        deleteStmt.setString(2, receiverUuid);
+	        int rowsAffected = deleteStmt.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            return true; // Erfolgreich gelöscht
+	        } else {
+	            return false; // Fehler beim löschen
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 	
 	public static void addPlayerIfNotExists(String uuid) {
 		ProxiedPlayer player =ProxyServer.getInstance().getPlayer(UUID.fromString(uuid));
@@ -51,7 +93,7 @@ public class FriendsManager {
     	addPlayerIfNotExists(receiverUUID);
 
         String checkQuery = "SELECT COUNT(*) FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
-        String insertQuery = "INSERT INTO friend_requests (sender_uuid, receiver_uuid, status) VALUES (?, ?, 'pending')";
+        String insertQuery = "INSERT INTO friend_requests (sender_uuid, receiver_uuid, status, send_at) VALUES (?, ?, 'pending', NOW())";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkQuery);

@@ -65,16 +65,17 @@ public class Message {
 	public static String friends_prefix = "&8[&cFreunde§8] "; 
 	
 	public static BaseComponent[] friends_help() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\n"
-																														+ "&7\u2588 &6/friend add &8- &7Adde einen Freund\n"
-																														+ "&7\u2588 &6/friend remove &8- &7Remove einen Freund\n"
-																														+ "&7\u2588 &6/friend join &8- &7Springe zum Server eines Freundes\n"
-																														+ "&7\u2588 &6/friend accept &8- &7Akzeptiere eine Anfrage\n"
-																														+ "&7\u2588 &6/friend deny &8- &7Lehene eine Anfrage ab\n"
-																														+ "&7\u2588 &6/friend ignore &8- &7Ignoriere eine Anfrage\n"
+																														+ "&7\u2588 &6/friend add <spieler>&8- &7Adde einen Freund\n"
+																														+ "&7\u2588 &6/friend remove <spieler>&8- &7Remove einen Freund\n"
+																														+ "&7\u2588 &6/friend join <spieler>&8- &7Springe zum Server eines Freundes\n"
+																														+ "&7\u2588 &6/friend accept [spieler]&8- &7Akzeptiere eine Anfrage\n"
+																														+ "&7\u2588 &6/friend deny [spieler]&8- &7Lehene eine Anfrage ab\n"
+																														+ "&7\u2588 &6/friend ignore [spieler]&8- &7Ignoriere eine Anfrage\n"
 																														+ "&7\u2588 &6/friend list &8- &7Zeige die Freundesliste\n"
 																														+ "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588")).create(); }
 	public static BaseComponent[] friends_syntax() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&cBenutze&8: &e/friend ")).create(); }
 
+	public static BaseComponent[] friends_notBefriended(String target) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&c%target% ist nicht dein Freund.".replaceAll("%target%", target))).create(); }
 	public static BaseComponent[] friends_requestSend(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du hast &a%player% &7eine Anfrage gesendet.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_requestRecived(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du haste eine Anfrage von &a%player% &7bekommen!".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_ACCEPT() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&2&l[&a&lAKZEPTIEREN&2&l]")).create(); }
@@ -87,13 +88,13 @@ public class Message {
 	public static BaseComponent[] friends_noRequests() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&cDu hast momentan keine Anfragen.")).create(); }
 	public static BaseComponent[] friends_alreadyRequested(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&cDu hast &e%player% &cbereits eine Anfrage gesendet.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_requestAccptedSend(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du hast die Anfrage von &e%player%&7 angenommen.".replaceAll("%player%", player))).create(); }
-	public static BaseComponent[] friends_reqeustAccpetedRecived(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&e%player% &7hat deine Anfrage angenommen.".replaceAll("%player%", player))).create(); }
+	public static BaseComponent[] friends_requestAccpetedRecived(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&e%player% &7hat deine Anfrage angenommen.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_requestIgnored(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du ignoriest die Anfrage von &e%player%&7.".replaceAll("%player%", player))).create(); } 
 	public static BaseComponent[] friends_requestDeniedSend(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du hast die Anfrage von &e%player%&7 abgelehnt.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_requestDeniedRecived(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&e%player% &7hat deine Anfrage abgelehnt.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_disbanned(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7Du bist nun kein Freund mehr von &e%player%.".replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_friendList(String size) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&6&lFreundes Liste &7(&eAnzahl von Freunden&8: &e%size%&7)&e&l:".replaceAll("%size%", size))).create(); }
-	public static BaseComponent[] friends_onlineOn(Server server) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&2&l[&a&lOnline auf %server%&2&l]")).create(); }
+	public static BaseComponent[] friends_onlineOn(Server server) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', "&2&l[&a&lOnline auf %server%&2&l]".replaceAll("%server%", server.getInfo().getName()))).create(); }
 	public static BaseComponent[] friends_noFriends() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+"&7&oDu hast keine Freunde.")).create(); }
 	
 	//-------------------------------------------------------------------------------------------------------------------------------------------------------------//
