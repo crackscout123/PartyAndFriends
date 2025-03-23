@@ -5,10 +5,10 @@
 - Freundesystem mit Anfragen & Bestätigungen
 - Partysystem für gemeinsames Spielen
 - Private Nachrichten zwischen Freunden
- ~~- GUI-Unterstützung für einfache Bedienung~~
+- ~~GUI-Unterstützung für einfache Bedienung~~
 - Datenbank-Support für MySQL und  ~~SQLite~~
- ~~- API für Entwickler zur Integration in eigene Plugins~~
- ~~- Anpassbare Nachrichten~~
+- ~~API für Entwickler zur Integration in eigene Plugins~~
+- ~~Anpassbare Nachrichten~~
 - Optimierte Performance für große Netzwerke
 
 # ⭐ TODO
@@ -25,8 +25,8 @@
 1. Lade die neueste Version von [SpigotMC](https://www.spigotmc.org/resources/party-friends.123475/) oder [GitHub](https://github.com/crackscout123/PartyAndFriends) herunter.
 2. Verschiebe die **.jar**-Datei in den **plugins/**-Ordner deines BungeeCord-Servers.
 3. Starte den Server, um die Konfigurationsdateien generieren zu lassen.
- ~~4. Passe die **config.yml** an deine Bedürfnisse an.~~
- ~~5. Stelle sicher, dass du eine MySQL-Datenbank eingerichtet hast, falls benötigt.~~
+4. ~~Passe die **config.yml** an deine Bedürfnisse an.~~
+5. ~~Stelle sicher, dass du eine MySQL-Datenbank eingerichtet hast, falls benötigt.~~
 
 ## 💡 Befehle & Rechte
 
@@ -39,6 +39,9 @@
 | `/party invite <Spieler>` | Spieler in die Party einladen |
 | `/party accept` | Partyeinladung annehmen |
 | `/party leave` | Party verlassen |
+| `/p <nachricht>` | Im Party-Chat schreiben |
+| `/msg <spieler> <nachricht>` | Schreibe einem Freund |
+| `/r <nachricht>` | Antworte auf die letzte private Nachricht |
 
 ### Berechtigungen
 | Permission | Beschreibung |
