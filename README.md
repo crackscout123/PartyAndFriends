@@ -1,41 +1,51 @@
-# Party & Friends - BungeeCord & Spigot
+# Party and Friends - BungeeCord & Spigot Friend System
 
-Ein leistungsstarkes und flexibles Party- und Freundesystem für BungeeCord und Spigot!
+## 🌟 Features
 
-## Features ✨
-- Freundesystem mit Anfragen, Annahmen und Blockier-Funktion
-- Partysystem mit Einladungen, Beitritt und Verlassen
-- Unterstützung für mehrere Server (BungeeCord-kompatibel)
-- Konfigurierbare Nachrichten und Einstellungen
-- Datenbank-Unterstützung (MySQL)
-- Umfangreiche API für Entwickler
+- Freundesystem mit Anfragen & Bestätigungen
+- Partysystem für gemeinsames Spielen
+- Private Nachrichten zwischen Freunden
+- GUI-Unterstützung für einfache Bedienung
+- Datenbank-Support für MySQL und SQLite
+- API für Entwickler zur Integration in eigene Plugins
+- Anpassbare Nachrichten und Befehle
+- Optimierte Performance für große Netzwerke
 
-## Installation 📥
-1. Lade das Plugin herunter und speichere es im `plugins`-Ordner deines BungeeCord- oder Spigot-Servers.
-2. Starte den Server neu, um die Konfigurationsdateien generieren zu lassen.
-3. Passe die Einstellungen in der `config.yml` an.
-4. Starte den Server erneut, und das Plugin ist einsatzbereit!
+## 📝 Installation
 
-## Befehle 📜
+1. Lade die neueste Version von [SpigotMC](https://www.spigotmc.org/) oder [GitHub](https://github.com/crackscout123/PartyAndFriends) herunter.
+2. Verschiebe die **.jar**-Datei in den **plugins/**-Ordner deines BungeeCord- und/oder Spigot-Servers.
+3. Starte den Server, um die Konfigurationsdateien generieren zu lassen.
+4. Passe die **config.yml** an deine Bedürfnisse an.
+5. Stelle sicher, dass du eine MySQL-Datenbank eingerichtet hast, falls benötigt.
+
+## 💡 Befehle & Rechte
+
+### Hauptbefehle
 | Befehl | Beschreibung |
 |--------|-------------|
 | `/friend add <Spieler>` | Freundesanfrage senden |
 | `/friend remove <Spieler>` | Freund entfernen |
-| `/party create` | Neue Party erstellen |
-| `/party invite <Spieler>` | Spieler in Party einladen |
+| `/friend list` | Liste aller Freunde anzeigen |
+| `/party invite <Spieler>` | Spieler in die Party einladen |
+| `/party accept` | Partyeinladung annehmen |
 | `/party leave` | Party verlassen |
 
-## Berechtigungen 🔑
+### Berechtigungen
 | Permission | Beschreibung |
 |------------|-------------|
-| `partyandfriends.friend` | Zugriff auf das Freundesystem |
-| `partyandfriends.party` | Zugriff auf das Partysystem |
-| `partyandfriends.admin` | Admin-Funktionen nutzen |
+| `partyandfriends.use` | Nutzung der Grundfunktionen |
+| `partyandfriends.admin` | Verwaltung und Admin-Funktionen |
 
-## Datenbank 🎲
-Das Plugin nutzt MySQL zur Speicherung von Freundes- und Party-Daten. Stelle sicher, dass dein MySQL-Server läuft und die Zugangsdaten in der `config.yml` korrekt eingetragen sind.
+## 🔧 Konfiguration
 
-## Unterstützung 🛠️
-Falls du Hilfe benötigst, kannst du ein Issue auf GitHub erstellen oder dich mit der Community austauschen.
+Die Plugin-Konfiguration kann in der **config.yml** angepasst werden. Hier kannst du Optionen für Nachrichten, Datenbankverbindung und weitere Features ändern.
 
-🔗 [GitHub-Repository](https://github.com/crackscout123/PartyAndFriends)
+## 💌 Unterstützung
+
+Falls du Fragen hast oder Probleme auftreten, erstelle ein Issue auf GitHub oder trete unserer Community auf SpigotMC bei!
+
+**GitHub:** [Party and Friends](https://github.com/crackscout123/PartyAndFriends)  
+**SpigotMC:** [Plugin-Seite](https://www.spigotmc.org/)
+
+Viel Spaß mit deinem neuen Freundesystem! 🚀
