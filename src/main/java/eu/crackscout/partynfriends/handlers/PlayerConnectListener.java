@@ -14,8 +14,8 @@ public class PlayerConnectListener {
 	
 	@EventHandler
 	public void onPlayerHandshakeEvent(PlayerHandshakeEvent e) {
-		
 	}
+	
 }
 
 
