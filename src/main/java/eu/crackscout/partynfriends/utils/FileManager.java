@@ -67,6 +67,7 @@ public class FileManager {
 			config.set("party.playerJoined", "&e%player%&7 ist der Party beigetreten!");
 			config.set("party.playerLeft", "&7Der Spieler&e %player% &7hat die Party &cverlassen&7.");
 			config.set("party.disbanned", "&7Die Party wurde &caufgelöst.");
+			
 			config.set("party.serverSwitched", "&7Die Party hat den Server &e%server% &abetreten&7.");
 			
 			config.set("party.button.accept", "&2&l[&a&lAKZEPTIEREN&2&l]");
