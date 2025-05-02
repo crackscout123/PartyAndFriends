@@ -2,22 +2,24 @@
 
 ## 🌟 Features
 
+- Vollständig anpassbare Nachrichten
 - Freundesystem mit Anfragen & Bestätigungen
 - Partysystem für gemeinsames Spielen
 - Private Nachrichten zwischen Freunden
 - ~~GUI-Unterstützung für einfache Bedienung~~
 - Datenbank-Support für MySQL und  ~~SQLite~~
 - ~~API für Entwickler zur Integration in eigene Plugins~~
-- ~~Anpassbare Nachrichten~~
 - Optimierte Performance für große Netzwerke
 
 # ⭐ TODO
 
-- GUI-Unterstützung für einfache Bedienung
-- SQLite Support
-- API für Addons?
-- messages.yml - Anpassbare Nachrichten
-- config.yml - MySQL und allgemeine Einstellungen
+messages.yml - Anpassbare Nachrichten ✅
+SQLite Support!
+config.yml - MySQL und allgemeine Einstellungen!
+Permissions!
+Update Checker / Auto Updater
+API für Addons?
+GUI / GUI-Addon?
 
 
 ## 📝 Installation
