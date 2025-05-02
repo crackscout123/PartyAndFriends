@@ -17,9 +17,6 @@ public class PartyCommand extends Command{
 	
 	public PartyCommand(Main plugin) { super("party"); this.plugin = plugin; }
 
-	// TODO: add /party help page
-	static String partyCommandHelp = "help page here.";
-	
 	static BaseComponent[] partyNone = Message.party_noParty();
 	static BaseComponent[] partyPlayerList = Message.party_listPlayer();
 	static BaseComponent[] partyNoInvite= Message.party_noInvite();
@@ -34,7 +31,7 @@ public class PartyCommand extends Command{
 		}
 		ProxiedPlayer player = (ProxiedPlayer)sender;
 		if(args.length == 0) {
-			Message.getInstance().sendMessage(player, partyCommandHelp);
+			Message.getInstance().sendMessage(player, Message.party_help());
 			return;
 		}
 		if(args.length == 1) {
@@ -82,6 +79,28 @@ public class PartyCommand extends Command{
 			return;
 		}
 		if(args.length == 2) {
+			if(args[0].equalsIgnoreCase("kick")) {
+				if(!plugin.getPartyManager().isInParty(player)) {
+					PartyManager.getInstance().sendMessage(player, Message.party_notInParty(args[1]));
+				}
+				if(this.plugin.getPartyManager().isPartyLeader(player)) {
+					Party party = this.plugin.getPartyManager().getPartyPlayers().get(player);
+					ProxiedPlayer target = ProxyServer.getInstance().getPlayer(args[1]);
+					if(target == null) {
+						PartyManager.getInstance().sendMessage(player, Message.offlinePlayer(args[1]));
+						return;
+					}
+					if(this.plugin.getPartyManager().isInParty(target)) {
+						party.removePlayer(player);
+						return;
+					}
+					PartyManager.getInstance().sendMessage(player, Message.party_notInParty(target.getName()));
+					return;
+					
+				}
+				PartyManager.getInstance().sendMessage(player, noLeader);
+				return;
+			}
 			if(args[0].equalsIgnoreCase("invite")) {
 				if(!plugin.getPartyManager().isInParty(player)) {
 					Party party = new Party(this.plugin, player);

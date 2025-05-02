@@ -56,12 +56,10 @@ public class DirectMessage extends Command{
 						p.sendMessage(Message.dm_nofriends(args[0]));
 					}
 				} else {
-					p.sendMessage(Message.enterMsg());
+					sender.sendMessage(Message.dm_selfmessage());
 				}
 			}
-		} else {
-			sender.sendMessage(Message.dm_selfmessage());
-		}
+		} 
 	}
 }
 

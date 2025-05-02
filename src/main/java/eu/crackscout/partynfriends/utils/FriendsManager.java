@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -124,14 +126,22 @@ public class FriendsManager {
             conn.setAutoCommit(false); // Transaktion starten
             
             // 1. Anfrage löschen
-            String deleteRequestSQL = "DELETE FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(deleteRequestSQL)) {
+            String deleteRequestSQL1 = "DELETE FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteRequestSQL1)) {
                 stmt.setString(1, senderUUID);
                 stmt.setString(2, receiverUUID);
                 stmt.executeUpdate();
             }
             
-            // 2. Freunde in die `friends`-Tabelle eintragen
+            // 2. Anfrage löschen
+            String deleteRequestSQL2 = "DELETE FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteRequestSQL2)) {
+                stmt.setString(1, receiverUUID);
+                stmt.setString(2, senderUUID);
+                stmt.executeUpdate();
+            }
+            
+            //  Freunde in die `friends`-Tabelle eintragen
             String insertFriendSQL = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, NOW()), (?, ?, NOW())";
             try (PreparedStatement stmt = conn.prepareStatement(insertFriendSQL)) {
                 stmt.setString(1, senderUUID);
@@ -169,7 +179,7 @@ public class FriendsManager {
         }
     }
 
-    public static List<String> getFriends(String playerUUID) {
+    public static List<String> getFriendUUIDs(String playerUUID) {
         List<String> friends = new ArrayList<>();
         String sql = "SELECT friend_uuid FROM friends WHERE player_uuid = ?";
 
@@ -190,6 +200,27 @@ public class FriendsManager {
         return friends;
     }
     
+    public static String resolveUUID(String playerUUID) {
+        String resolvedName = null;
+        String sql = "SELECT name FROM players WHERE uuid = ?";
+
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, playerUUID);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+            	resolvedName = rs.getString("name");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return resolvedName;
+    }
+    
     public static boolean updateLastSeen(String playerUUID) {
         String sql = "UPDATE players SET last_seen = NOW() WHERE uuid = ?";
 
@@ -205,7 +236,44 @@ public class FriendsManager {
             return false;
         }
     }
+    
+    public static String getLastSeen(String playerUUID) {
+        String lastseen = null;
+        String sql = "SELECT last_seen FROM players WHERE uuid = ?";
 
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, playerUUID);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+            	lastseen = rs.getString("last_seen");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return formatLastSeen(lastseen);
+    }
+
+    public static String formatLastSeen(String lastseen) {
+        try {
+            // Ursprüngliches Format aus der Datenbank
+            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = dbFormat.parse(lastseen);
+
+            // Ziel-Format: 21.03.2025 - 06:47
+            SimpleDateFormat displayFormat = new SimpleDateFormat(Message.dateFormat()); // "dd.MM.yyyy - HH:mm"
+            return displayFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Gib das Originaldatum zurück, falls etwas schiefgeht
+            return lastseen;
+        }
+    }
+    
     public static boolean areFriends(String playerUUID, String friendUUID) {
         String sql = "SELECT COUNT(*) FROM friends WHERE (player_uuid = ? AND friend_uuid = ?) OR (player_uuid = ? AND friend_uuid = ?)";
         

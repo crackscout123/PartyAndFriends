@@ -16,17 +16,23 @@ import net.md_5.bungee.config.Configuration;
 public class Message {
 	
 	private static Message instance;	
+	private static Configuration cfg; 
 	
-	private static Configuration cfg;
+	public static String friends_prefix;
 	
-	public static void init(Main main) throws IOException {cfg = main.getLangConfig(); }
+	public static void init(Main main) throws IOException {
+		cfg = main.getLangConfig();
+		friends_prefix = cfg.getString("friends.prefix"); 
+	}
 	
 	public static HashMap<String, String> lastmsg = new HashMap<String, String>();
 	
 	
 	//----------------------------------------------GENERAL MESSAGES---------------------------------------------------------//
 	public static BaseComponent[] offlinePlayer(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("general.offlinePlayer").replaceAll("%player%", player))).create(); }
-	public static BaseComponent[] enterMsg() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("general.enterMessage"))).create(); }
+	public static BaseComponent[] enterMsg() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("general.enterMessage"))).create(); } 
+	
+	public static String dateFormat() { return ChatColor.translateAlternateColorCodes('&', cfg.getString("general.dateFormat")); } // dd.MM.yyyy - HH:mm
 	
 
 	//----------------------------------------------DIRECT MESSAGES---------------------------------------------------------//
@@ -43,6 +49,8 @@ public class Message {
 	public static BaseComponent[] dm_msgRecieved(String sender, String msg) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("directmessage.chat.recieved").replaceAll("%sender%", sender)+msg)).create();	}
 
 	//----------------------------------------------PARTY MESSAGES---------------------------------------------------------//
+	public static BaseComponent[] party_help() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.help"))).create(); }
+	
 	public static BaseComponent[] party_listPlayer() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.listPlayer"))).create(); }
 	public static BaseComponent[] party_noInvite() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.noInvite"))).create(); }
 	public static BaseComponent[] party_accepted() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.inviteAccepted"))).create(); }
@@ -70,7 +78,7 @@ public class Message {
 
 	//----------------------------------------------FRIENDS MESSAGES---------------------------------------------------------//
 	
-	public static String friends_prefix = cfg.getString("friends.prefix"); 
+//	public static String friends_prefix = cfg.getString("friends.prefix"); 
 	
 	public static BaseComponent[] friends_syntax() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+cfg.getString("friends.syntax"))).create(); }
 
@@ -91,8 +99,10 @@ public class Message {
 	public static BaseComponent[] friends_requestDeniedRecived(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+cfg.getString("friends.requestDeniedRecived").replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_disbanned(String player) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+cfg.getString("friends.disbanned").replaceAll("%player%", player))).create(); }
 	public static BaseComponent[] friends_friendList(String size) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+cfg.getString("friends.friendList").replaceAll("%size%", size))).create(); }
-	public static BaseComponent[] friends_onlineOn(Server server) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("friends.button.onlineOn").replaceAll("%server%", server.getInfo().getName()))).create(); }
 	public static BaseComponent[] friends_noFriends() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', friends_prefix+cfg.getString("friends.noFriends"))).create(); }
+	
+	public static BaseComponent[] friends_onlineOn(Server server) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("friends.button.onlineOn").replaceAll("%server%", server.getInfo().getName()))).create(); }
+	public static BaseComponent[] friends_LASTSEEN(String lastseen) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("friends.button.lastseen").replaceAll("%lastseen%", lastseen))).create(); }
 		
 	public static BaseComponent[] friends_ACCEPT() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("friends.button.accept"))).create(); }
 	public static BaseComponent[] friends_DENY() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("friends.button.deny"))).create(); }

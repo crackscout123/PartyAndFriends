@@ -1,6 +1,6 @@
 package eu.crackscout.partynfriends.commands;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +10,7 @@ import eu.crackscout.partynfriends.utils.Message;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -25,11 +26,11 @@ public class FriendsCommand extends Command{
 		super("Friend"); 
 		
 		this.plugin = plugin; 
-		this.invites = new HashMap<String, String>();
-		this.names = new HashMap<String, String>();
+//		this.invites = new HashMap<String, String>();
+//		this.names = new HashMap<String, String>();
 	}
 	
-	HashMap<String, String> invites; HashMap<String, String> names;
+//	HashMap<String, String> invites; HashMap<String, String> names;
 	String spacer = ChatColor.translateAlternateColorCodes('&', "&8\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\n");
 
 	@Override
@@ -67,9 +68,9 @@ public class FriendsCommand extends Command{
 					
 					Message.getInstance().sendMessage(target, Message.friends_requestRecived(player.getName()));
 
-					TextComponent acceptTc = Message.getInstance().createComponent(Message.friends_ACCEPT(), "/friend accept");
-					TextComponent denyTc = Message.getInstance().createComponent(Message.friends_DENY(), "/friend deny");
-					TextComponent ignoreTc = Message.getInstance().createComponent(Message.friends_IGNORE(), "/friend ignore");
+					TextComponent acceptTc = Message.getInstance().createComponent(Message.friends_ACCEPT(), "/friend accept " + target.getName());
+					TextComponent denyTc = Message.getInstance().createComponent(Message.friends_DENY(), "/friend deny" + target.getName());
+					TextComponent ignoreTc = Message.getInstance().createComponent(Message.friends_IGNORE(), "/friend ignore" + target.getName());
 					TextComponent tc = new TextComponent(spacer);
 					tc.addExtra(acceptTc);
 					tc.addExtra(ChatColor.GRAY + " - ");
@@ -78,7 +79,6 @@ public class FriendsCommand extends Command{
 					tc.addExtra(ignoreTc);
 					
 					Message.getInstance().sendMessage(target, tc);
-					this.invites.put(target.getName(), player.getName());
 					return;
 				}
 				if(args.length == 3) {
@@ -89,19 +89,7 @@ public class FriendsCommand extends Command{
 			}
 			if(args[0].equalsIgnoreCase("accept")) {
 				if(args.length == 1) { // /friend accept 
-					ProxiedPlayer target = ProxyServer.getInstance().getPlayer(this.invites.get(player.getName()));
-					if(this.invites.containsKey(player.getName())) {
-						if(target != null) {
-							Message.getInstance().sendMessage(player, Message.friends_requestAccptedSend(target.getName()));
-							Message.getInstance().sendMessage(target, Message.friends_requestAccpetedRecived(player.getName()));
-							this.invites.remove(player.getName());
-							FriendsManager.acceptFriendRequest(player.getUniqueId().toString(), target.getUniqueId().toString()); //TODO: richtige reinfolge überprüfen
-							return;
-						}
-						Message.getInstance().sendMessage(player, Message.offlinePlayer(""));
-						return;
-					}
-					Message.getInstance().sendMessage(player, Message.friends_noRequests());
+					Message.getInstance().sendMessage(player, Message.friends_syntax());
 					return;
 				}
 				if(args.length == 2) { // /friend accept <spieler>
@@ -114,7 +102,7 @@ public class FriendsCommand extends Command{
 						if(FriendsManager.getOpenFriendRequests(player.getUniqueId().toString()).contains(target.getUniqueId().toString())) {
 							Message.getInstance().sendMessage(player, Message.friends_requestAccptedSend(target.getName()));
 							Message.getInstance().sendMessage(target, Message.friends_requestAccpetedRecived(player.getName()));
-							FriendsManager.acceptFriendRequest(player.getUniqueId().toString(), target.getUniqueId().toString()); //TODO: richtige reinfolge überprüfen
+							FriendsManager.acceptFriendRequest(player.getUniqueId().toString(), target.getUniqueId().toString()); 
 							return;
 						}
 						Message.getInstance().sendMessage(player, Message.friends_noRequests());		
@@ -128,17 +116,7 @@ public class FriendsCommand extends Command{
 			}
 			if(args[0].equalsIgnoreCase("ignore")) {
 				if(args.length == 1) { // /friend ignore 
-					ProxiedPlayer target = ProxyServer.getInstance().getPlayer(this.invites.get(player.getName()));
-					if(this.invites.containsKey(player.getName())) {
-						if(target != null) {
-							Message.getInstance().sendMessage(player, Message.friends_requestIgnored(target.getName()));
-							this.invites.remove(player.getName());
-							return;
-						}
-						Message.getInstance().sendMessage(player, Message.offlinePlayer(""));
-						return;
-					}
-					Message.getInstance().sendMessage(player, Message.friends_noRequests());
+					Message.getInstance().sendMessage(player, Message.friends_syntax());
 					return;
 				}
 				if(args.length == 2) { // /friend ignore <spieler>
@@ -159,20 +137,7 @@ public class FriendsCommand extends Command{
 			}
 			if(args[0].equalsIgnoreCase("deny")) {
 				if(args.length == 1) { // /friend deny 
-					ProxiedPlayer target = ProxyServer.getInstance().getPlayer(this.invites.get(player.getName()));
-					if(this.invites.containsKey(player.getName())) {
-						if(target != null) {
-							if(FriendsManager.deleteFriendRequest(player.getUniqueId().toString(), target.getUniqueId().toString())) {
-								Message.getInstance().sendMessage(player, Message.friends_requestDeniedSend(target.getName()));
-								Message.getInstance().sendMessage(target, Message.friends_requestDeniedRecived(player.getName()));
-								this.invites.remove(player.getName());
-								return;
-							}
-						}
-						Message.getInstance().sendMessage(player, Message.offlinePlayer(""));
-						return;
-					}
-					Message.getInstance().sendMessage(player, Message.friends_noRequests());
+					Message.getInstance().sendMessage(player, Message.friends_syntax());
 					return;
 				}
 				if(args.length == 2) { // /friend deny <spieler>
@@ -242,7 +207,7 @@ public class FriendsCommand extends Command{
 			if(args[0].equalsIgnoreCase("list")) {
 
 				if(args.length == 1) { // friend list 
-					List<String> freunde = FriendsManager.getFriends(player.getUniqueId().toString());
+					List<String> freunde = FriendsManager.getFriendUUIDs(player.getUniqueId().toString());
 					int size = freunde.size();
 					if(size == 0) {
 						Message.getInstance().sendMessage(player, Message.friends_noFriends());
@@ -252,12 +217,16 @@ public class FriendsCommand extends Command{
 					Message.getInstance().sendMessage(player, Message.friends_friendList(size+""));
 					for (String freund : freunde) {
 						ProxiedPlayer proxiedFriend = ProxyServer.getInstance().getPlayer(UUID.fromString(freund));
-						if(proxiedFriend.isConnected()) {
+						if(proxiedFriend != null && proxiedFriend.isConnected()) {
 							TextComponent onlineOn = Message.getInstance().createComponent(Message.friends_onlineOn(proxiedFriend.getServer()), "/friend join " + proxiedFriend.getName());
 							TextComponent remove = Message.getInstance().createComponent(Message.friends_REMOVE(), "/friend remove " + proxiedFriend.getName());
+							TextComponent removeHover = Message.getInstance().createComponent("/friend remove " + FriendsManager.resolveUUID(freund), "");
+							remove.setHoverEvent(new HoverEvent(
+									HoverEvent.Action.SHOW_TEXT, new net.md_5.bungee.api.chat.hover.content.Text(removeHover)));
+							
 							TextComponent tc = new TextComponent(spacer);
 							
-							tc.addExtra(ChatColor.GRAY + proxiedFriend.getName() + "\n");
+							tc.addExtra(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', "&l") + proxiedFriend.getName() + " ");
 							tc.addExtra("");
 							tc.addExtra(onlineOn);
 							tc.addExtra(ChatColor.GRAY + " - ");
@@ -266,14 +235,25 @@ public class FriendsCommand extends Command{
 							Message.getInstance().sendMessage(player, tc);
 						} else {
 							TextComponent offline = Message.getInstance().createComponent(Message.friends_OFFLINETAG(), "");
-							TextComponent remove = Message.getInstance().createComponent(Message.friends_REMOVE(), "/friend remove " + proxiedFriend.getName());
+							TextComponent lastseen = Message.getInstance().createComponent(Message.friends_LASTSEEN(FriendsManager.getLastSeen(freund)), "");
+							offline.setHoverEvent(new HoverEvent(
+									HoverEvent.Action.SHOW_TEXT, new net.md_5.bungee.api.chat.hover.content.Text(lastseen)));
+							
+							TextComponent remove = Message.getInstance().createComponent(Message.friends_REMOVE(), "/friend remove " + FriendsManager.resolveUUID(freund));
+							TextComponent removeHover = Message.getInstance().createComponent("/friend remove " + FriendsManager.resolveUUID(freund), "");
+							remove.setHoverEvent(new HoverEvent(
+									HoverEvent.Action.SHOW_TEXT, new net.md_5.bungee.api.chat.hover.content.Text(removeHover)));
+							
 							TextComponent tc = new TextComponent(spacer);
 							
-							tc.addExtra(ChatColor.GRAY + proxiedFriend.getName() + "\n");
+							tc.addExtra(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', "&l") + FriendsManager.resolveUUID(freund) + " ");
 							tc.addExtra("");
 							tc.addExtra(offline);
 							tc.addExtra(ChatColor.GRAY + " - ");
 							tc.addExtra(remove);
+//							tc.addExtra(ChatColor.GRAY + " - ");
+//							tc.addExtra(lastseen);
+							tc.addExtra("");
 							
 							Message.getInstance().sendMessage(player, tc);
 						}

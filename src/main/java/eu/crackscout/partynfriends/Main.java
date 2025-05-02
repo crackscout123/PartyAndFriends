@@ -39,7 +39,6 @@ public class Main extends Plugin {
 	private Message message;
 	public Message getMessage() { return this.message; }
 	
-	
 	void initCommands() {
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, (Command)new FriendsCommand(this));		
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, (Command)new PartyCommand(this));		
@@ -72,9 +71,10 @@ public class Main extends Plugin {
 	private void createDefaultConfigs() {
 		if(!getDataFolder().exists()) {
 			getDataFolder().mkdir();
+			FileManager fileManager = new FileManager(this, this.langFile);
+			fileManager.createDefaults();
 		}
-		FileManager fileManager = new FileManager(this, this.langFile);
-		fileManager.createDefaults();
+		return;
 	}
 	
 	@Override
