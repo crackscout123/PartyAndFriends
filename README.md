@@ -13,13 +13,13 @@
 
 # ⭐ TODO
 
-messages.yml - Anpassbare Nachrichten ✅
-SQLite Support!
-config.yml - MySQL und allgemeine Einstellungen!
-Permissions!
-Update Checker / Auto Updater
-API für Addons?
-GUI / GUI-Addon?
+- messages.yml - Anpassbare Nachrichten ✅
+- SQLite Support!
+- config.yml - MySQL und allgemeine Einstellungen!
+- Permissions!
+- Update Checker / Auto Updater
+- API für Addons?
+- GUI / GUI-Addon?
 
 
 ## 📝 Installation
