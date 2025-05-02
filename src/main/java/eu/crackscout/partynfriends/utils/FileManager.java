@@ -39,6 +39,7 @@ public class FileManager {
 			//----------------------------------------------GENERAL MESSAGES---------------------------------------------------------//
 			config.set("general.offlinePlayer", "&7Der Spieler&e %player% &7ist &cnicht &conline&7.");
 			config.set("general.enterMessage", "&7Bitte gebe &ceine &cNachricht &7ein.");
+			config.set("general.dateFormat", "dd.MM.yyyy - HH:mm");
 			
 			//----------------------------------------------DIRECT MESSAGES---------------------------------------------------------//
 			config.set("directmessage.syntax", "&cBenutze&8: &e/msg <Spieler> <Nachricht>");
@@ -52,6 +53,16 @@ public class FileManager {
 			config.set("directmessage.chat.recieved", "&aNACHRICHT &8|&7 %sender% &6> &7Du&a:&7 ");
 			
 			//----------------------------------------------PARTY MESSAGES---------------------------------------------------------//
+			config.set("party.help", "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\n"
+					+ "&7\u2588 &6/party invite <spieler>&8- &7Lade jemanden zur Party ein\n"
+					+ "&7\u2588 &6/party kick <spieler>&8- &7Entferne einen Spieler aus der Party\n"
+					+ "&7\u2588 &6/party promote <spieler>8- &7Ernenne eine Spieler zum Partyleader\n"
+					+ "&7\u2588 &6/party leave &8- &7Verlasse die Party\n"
+					+ "&7\u2588 &6/party accept &8- &7Akzeptiere eine Einladung\n"
+					+ "&7\u2588 &6/party deny &8- &7Lehene eine Einladung ab\n"
+					+ "&7\u2588 &6/party list &8- &7Zeige die Mitglieder der Party an\n"
+					+ "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
+			
 			config.set("party.listPlayer", "&7Folgende Spieler befinden sich in der Party:");
 			config.set("party.noInvite", "&7Du hast leider &ckeine Partyanfrage &7bekommen.");
 			config.set("party.inviteAccepted", "&7Du hast die Anfrage &aangenommen&7.");
@@ -67,6 +78,7 @@ public class FileManager {
 			config.set("party.playerJoined", "&e%player%&7 ist der Party beigetreten!");
 			config.set("party.playerLeft", "&7Der Spieler&e %player% &7hat die Party &cverlassen&7.");
 			config.set("party.disbanned", "&7Die Party wurde &caufgelöst.");
+			
 			config.set("party.serverSwitched", "&7Die Party hat den Server &e%server% &abetreten&7.");
 			
 			config.set("party.button.accept", "&2&l[&a&lAKZEPTIEREN&2&l]");
@@ -109,9 +121,10 @@ public class FileManager {
 			config.set("friends.button.accept", "&2&l[&a&lAKZEPTIEREN&2&l]");
 			config.set("friends.button.deny", "&4&l[&c&lABLEHNEN&4&l]");
 			config.set("friends.button.ignore", "&6&l[&e&lIGNORIEREN&6&l]");
-			config.set("friends.button.remove", "&4&l[&c&lENTFERNEN&4&l]");
-			config.set("friends.button.offline", "&6&l[&e&lOFFLINE&6&l]");
-			config.set("friends.button.onlineOn", "&2&l[&a&lOnline auf %server%&2&l]");
+			config.set("friends.button.remove", "&4[&cENTFERNEN&4]");
+			config.set("friends.button.offline", "&6[&eOFFLINE&6]");
+			config.set("friends.button.onlineOn", "&2[&aOnline auf %server%&2]");
+			config.set("friends.button.lastseen", "&2[&aZuletzt: %lastseen%&2]");
 			
 			// save to file
 			ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, file);
