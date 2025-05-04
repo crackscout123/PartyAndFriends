@@ -10,6 +10,7 @@ import eu.crackscout.partynfriends.commands.messaging.PartyMessage;
 import eu.crackscout.partynfriends.commands.messaging.ResponseMessage;
 import eu.crackscout.partynfriends.handlers.PlayerDisconnectListener;
 import eu.crackscout.partynfriends.handlers.ServerSwitchListener;
+import eu.crackscout.partynfriends.utils.DatabaseManager;
 import eu.crackscout.partynfriends.utils.FileManager;
 import eu.crackscout.partynfriends.utils.Message;
 import eu.crackscout.partynfriends.utils.PartyManager;
@@ -61,9 +62,10 @@ public class Main extends Plugin {
 	private void loadDrivers() {
 		try {
 		    Class.forName("org.mariadb.jdbc.Driver");
-		    System.out.println("[Party & Friends] MariaDB-Treiber erfolgreich geladen.");
+		    Class.forName("org.sqlite.JDBC");
+		    System.out.println("[Party & Friends] Alle Treiber erfolgreich geladen.");
 		} catch (ClassNotFoundException e) {
-		    System.err.println("[Party & Friends] MariaDB-Treiber konnte nicht geladen werden!");
+		    System.err.println("[Party & Friends] Treiber konnte nicht geladen werden!");
 		    e.printStackTrace();
 		}
 	}
@@ -73,6 +75,9 @@ public class Main extends Plugin {
 			getDataFolder().mkdir();
 			FileManager fileManager = new FileManager(this, this.langFile);
 			fileManager.createDefaults();
+			
+			String dbType = "sqlite"; // TODO: make configurable 
+			DatabaseManager.init(this, dbType);
 		}
 		return;
 	}
@@ -81,7 +86,7 @@ public class Main extends Plugin {
 	public void onEnable() {
 		instance = this;
 		loadDrivers();
-		
+
 		createDefaultConfigs();
 		
 		try {
@@ -96,7 +101,11 @@ public class Main extends Plugin {
 		partyManager = new PartyManager();
 		message = new Message();
 	}
-
+	
+	@Override
+	public void onDisable() {
+		DatabaseManager.closeConnection();
+	}
 
 }
 

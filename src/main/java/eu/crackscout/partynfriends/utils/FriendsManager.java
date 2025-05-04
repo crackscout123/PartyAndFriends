@@ -59,10 +59,21 @@ public class FriendsManager {
 	
 	public static void addPlayerIfNotExists(String uuid) {
 		ProxiedPlayer player =ProxyServer.getInstance().getPlayer(UUID.fromString(uuid));
+		if(player == null) return;
+		
 		String name = player.getName();
+		String sql;
+		
+        if (DatabaseManager.isSQLite()) {
+            sql = "INSERT INTO players (uuid, name) VALUES (?, ?) "
+                + "ON CONFLICT(uuid) DO UPDATE SET name = excluded.name";
+        } else {
+            sql = "INSERT INTO players (uuid, name) VALUES (?, ?) "
+                + "ON DUPLICATE KEY UPDATE name = VALUES(name)";
+        }
+		
 	    try (Connection conn = DatabaseManager.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(
-	             "INSERT INTO players (uuid, name) VALUES (?, ?) ON DUPLICATE KEY UPDATE name = VALUES(name)")) {
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 	        
 	        stmt.setString(1, uuid);
 	        stmt.setString(2, name);
@@ -74,7 +85,13 @@ public class FriendsManager {
 	}
 	
     public static boolean addFriend(String playerUUID, String friendUUID) {
-        String sql = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, NOW())";
+        String sql;
+        
+        if (DatabaseManager.isSQLite()) {
+            sql = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, datetime('now'))";
+        } else {
+            sql = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, NOW())";
+        }
         
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -95,7 +112,13 @@ public class FriendsManager {
     	addPlayerIfNotExists(receiverUUID);
 
         String checkQuery = "SELECT COUNT(*) FROM friend_requests WHERE sender_uuid = ? AND receiver_uuid = ?";
-        String insertQuery = "INSERT INTO friend_requests (sender_uuid, receiver_uuid, status, send_at) VALUES (?, ?, 'pending', NOW())";
+        String insertQuery;
+        
+        if (DatabaseManager.isSQLite()) {
+            insertQuery = "INSERT INTO friend_requests (sender_uuid, receiver_uuid, status, send_at) VALUES (?, ?, 'pending', datetime('now'))";
+        } else {
+            insertQuery = "INSERT INTO friend_requests (sender_uuid, receiver_uuid, status, send_at) VALUES (?, ?, 'pending', NOW())";
+        }
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
@@ -142,7 +165,14 @@ public class FriendsManager {
             }
             
             //  Freunde in die `friends`-Tabelle eintragen
-            String insertFriendSQL = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, NOW()), (?, ?, NOW())";
+            String insertFriendSQL;
+
+            if (DatabaseManager.isSQLite()) {
+                insertFriendSQL = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, datetime('now')), (?, ?, datetime('now'))";
+            } else {
+                insertFriendSQL = "INSERT INTO friends (player_uuid, friend_uuid, since) VALUES (?, ?, NOW()), (?, ?, NOW())";
+            }
+            
             try (PreparedStatement stmt = conn.prepareStatement(insertFriendSQL)) {
                 stmt.setString(1, senderUUID);
                 stmt.setString(2, receiverUUID);
@@ -222,7 +252,13 @@ public class FriendsManager {
     }
     
     public static boolean updateLastSeen(String playerUUID) {
-        String sql = "UPDATE players SET last_seen = NOW() WHERE uuid = ?";
+        String sql;
+        
+        if (DatabaseManager.isSQLite()) {
+            sql = "UPDATE players SET last_seen = datetime('now') WHERE uuid = ?";
+        } else {
+            sql = "UPDATE players SET last_seen = NOW() WHERE uuid = ?";
+        }
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -259,6 +295,7 @@ public class FriendsManager {
     }
 
     public static String formatLastSeen(String lastseen) {
+        if (lastseen == null) return "N/A";
         try {
             // Ursprüngliches Format aus der Datenbank
             SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -287,7 +324,7 @@ public class FriendsManager {
             
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0; // Falls die Anzahl größer als 0 ist, sind sie befreundet
+                return rs.getInt(1) > 0; // Falls die Anzahl groeszer als 0 ist, sind sie befreundet
             }
             
         } catch (SQLException e) {
