@@ -90,7 +90,7 @@ public class FileManager {
 				config.set("party.maxPlayer", "&7Du hast die &cmaximale Anzahl &7an Partymitgliedern erreicht.");
 				config.set("party.playerJoined", "&e%player%&7 ist der Party beigetreten!");
 				config.set("party.playerLeft", "&7Der Spieler&e %player% &7hat die Party &cverlassen&7.");
-				config.set("party.disbanned", "&7Die Party wurde &caufgelöst.");
+				config.set("party.disbanned", "&7Die Party wurde &caufgelÃ¶st.");
 				
 				config.set("party.serverSwitched", "&7Die Party hat den Server &e%server% &abetreten&7.");
 				
@@ -101,7 +101,7 @@ public class FileManager {
 				config.set("party.chat.recieved", "&cPARTY &8|&7 %sender% &6> &7Du&a:&7 ");
 				
 				//----------------------------------------------FRIENDS MESSAGES---------------------------------------------------------//
-				config.set("friends.prefix", "&8[&cFreunde§8] ");
+				config.set("friends.prefix", "&8[&cFreundeÂ§8] ");
 				config.set("friends.syntax", "&cBenutze&8: &e/friend ");
 				
 				config.set("friends.help", "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\n"
@@ -118,7 +118,7 @@ public class FileManager {
 				config.set("friends.requestSend", "&7Du hast &a%player% &7eine Anfrage gesendet.");
 				config.set("friends.requestRecived", "&7Du haste eine Anfrage von &a%player% &7bekommen!");
 				config.set("friends.alreadyFriends", "&c%player% &7ist bereits dein Freund.");
-				config.set("friends.selfRequest", "&cDu kannst dich nicht selber als Fruend hinzufügen.");
+				config.set("friends.selfRequest", "&cDu kannst dich nicht selber als Fruend hinzufÃ¼gen.");
 				config.set("friends.noRequests", "&cDu hast momentan keine Anfragen.");
 				config.set("friends.alreadyRequested", "&cDu hast &e%player% &cbereits eine Anfrage gesendet.");
 				config.set("friends.requestAcceptedSend", "&7Du hast die Anfrage von &e%player%&7 angenommen.");
