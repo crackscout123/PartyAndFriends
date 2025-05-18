@@ -28,10 +28,14 @@ public class Main extends Plugin {
 	private static Main instance;
 	
 	private File langFile = new File(getDataFolder()+"/lang/default.yml");
+	private File confFile = new File(getDataFolder()+"/config.yml");
     private Configuration langConfig;
+    private Configuration confConfig;
     
 	public File langFile() { return langFile; }
+	public File confFile() { return confFile; }
 	public Configuration getLangConfig() throws IOException { langConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(langFile); return langConfig; }
+	public Configuration getConfConfig() throws IOException { confConfig = ConfigurationProvider.getProvider(YamlConfiguration.class).load(confFile); return confConfig; }
 	
 	// Instances 
 	private PartyManager partyManager;
@@ -76,18 +80,19 @@ public class Main extends Plugin {
 		FileManager fileManager = new FileManager(this,this.langFile,this.confFile);
 		fileManager.createDefaults();
 		
-    try {
-      confConfig = getConfConfig();
-      langConfig = getLangConfig();
-
-      Configuration cfg = this.getConfConfig();
-      dbType = ("sqlite".equals(cfg.getString("database.type")) || "mysql".equals(cfg.getString("database.type"))) ? cfg.getString("database.type") : "sqlite";
-      DatabaseManager.init(this, dbType);
-    } catch (IOException e1) {
-      e1.printStackTrace();
+        try {
+			confConfig = getConfConfig();
+	        langConfig = getLangConfig();
+	        
+			Configuration cfg = this.getConfConfig();
+			dbType = ("sqlite".equals(cfg.getString("database.type")) || "mysql".equals(cfg.getString("database.type"))) ? cfg.getString("database.type") : "sqlite";
+			DatabaseManager.init(this, dbType);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		return;
 	}
+
 	
 	@Override
 	public void onEnable() {
