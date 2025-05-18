@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>eu.crackscout</groupId>
   <artifactId>partynfriends</artifactId>
-  <version>0.0.1-FINAL</version>
+  <version>0.0.4-DEV</version>
   <name>Party &amp; Friends</name>
 
 	<properties>
