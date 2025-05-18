@@ -15,7 +15,7 @@
 
 - messages.yml - Anpassbare Nachrichten ✅
 - SQLite Support! ✅
-- config.yml - MySQL und allgemeine Einstellungen!
+- config.yml - MySQL und allgemeine Einstellungen! ✅
 - Permissions!
 - Update Checker / Auto Updater
 - API für Addons?
