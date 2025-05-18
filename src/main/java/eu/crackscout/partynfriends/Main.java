@@ -71,6 +71,7 @@ public class Main extends Plugin {
 	}
 	
 	private void createDefaultConfigs() {
+<<<<<<< Updated upstream
 		if(!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 			FileManager fileManager = new FileManager(this, this.langFile);
@@ -78,6 +79,22 @@ public class Main extends Plugin {
 			
 			String dbType = "sqlite"; // TODO: make configurable 
 			DatabaseManager.init(this, dbType);
+=======
+		String dbType = "sqlite"; //default in case config is broken
+
+		FileManager fileManager = new FileManager(this,this.langFile,this.confFile);
+		fileManager.createDefaults();
+		
+        try {
+			confConfig = getConfConfig();
+	        langConfig = getLangConfig();
+
+			Configuration cfg = this.getConfConfig();
+			dbType = ("sqlite".equals(cfg.getString("database.type")) || "mysql".equals(cfg.getString("database.type"))) ? cfg.getString("database.type") : "sqlite";
+			DatabaseManager.init(this, dbType);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+>>>>>>> Stashed changes
 		}
 		return;
 	}
