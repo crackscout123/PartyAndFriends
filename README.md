@@ -7,14 +7,14 @@
 - Partysystem für gemeinsames Spielen
 - Private Nachrichten zwischen Freunden
 - ~~GUI-Unterstützung für einfache Bedienung~~
-- Datenbank-Support für MySQL und  ~~SQLite~~
+- Datenbank-Support für MySQL und SQlite
 - ~~API für Entwickler zur Integration in eigene Plugins~~
 - Optimierte Performance für große Netzwerke
 
 # ⭐ TODO
 
 - messages.yml - Anpassbare Nachrichten ✅
-- SQLite Support!
+- SQLite Support! ✅
 - config.yml - MySQL und allgemeine Einstellungen!
 - Permissions!
 - Update Checker / Auto Updater
