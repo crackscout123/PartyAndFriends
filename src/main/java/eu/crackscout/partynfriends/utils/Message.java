@@ -2,7 +2,6 @@ package eu.crackscout.partynfriends.utils;
 
 import java.io.IOException;
 import java.util.HashMap;
-
 import eu.crackscout.partynfriends.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -51,7 +50,7 @@ public class Message {
 	//----------------------------------------------PARTY MESSAGES---------------------------------------------------------//
 	public static BaseComponent[] party_help() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.help"))).create(); }
 	
-	public static BaseComponent[] party_listPlayer() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.listPlayer"))).create(); }
+	public static BaseComponent[] party_listPlayer(String playercount) { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.listPlayer").replaceAll("%playercount%", playercount))).create(); }
 	public static BaseComponent[] party_noInvite() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.noInvite"))).create(); }
 	public static BaseComponent[] party_accepted() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.inviteAccepted"))).create(); }
 	public static BaseComponent[] party_denied() { return new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', cfg.getString("party.inviteDenied"))).create(); }

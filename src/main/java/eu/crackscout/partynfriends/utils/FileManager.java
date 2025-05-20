@@ -42,6 +42,14 @@ public class FileManager {
                 config.set("database.mysql.user", "demo");
                 config.set("database.mysql.password", "password");
                 config.set("database.sqlite.file", "database.db");
+                config.set("values.parties.size.placeholderONE", 10);
+                config.set("values.parties.size.placeholderTWO", 15);
+                config.set("values.parties.size.placeholderTHREE", 20);
+                //TODO: maybe make it a catch so the user can add unlimited types of "ranks" 
+                /*
+                 * maybe something like
+                 * 
+                 * */
                 saveConfig(config, confFile);
             }
 
@@ -76,7 +84,7 @@ public class FileManager {
 						+ "&7\u2588 &6/party list &8- &7Zeige die Mitglieder der Party an\n"
 						+ "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588");
 				
-				config.set("party.listPlayer", "&7Folgende Spieler befinden sich in der Party:");
+				config.set("party.listPlayer", "&7Folgende Spieler befinden sich in der Party: [%playercount%]");
 				config.set("party.noInvite", "&7Du hast leider &ckeine Partyanfrage &7bekommen.");
 				config.set("party.inviteAccepted", "&7Du hast die Anfrage &aangenommen&7.");
 				config.set("party.inviteDenied", "&7Du hast die Anfrage &cabgelehnt&7.");
@@ -90,7 +98,7 @@ public class FileManager {
 				config.set("party.maxPlayer", "&7Du hast die &cmaximale Anzahl &7an Partymitgliedern erreicht.");
 				config.set("party.playerJoined", "&e%player%&7 ist der Party beigetreten!");
 				config.set("party.playerLeft", "&7Der Spieler&e %player% &7hat die Party &cverlassen&7.");
-				config.set("party.disbanned", "&7Die Party wurde &caufgelöst.");
+				config.set("party.disbanned", "&7Die Party wurde &caufgel�st.");
 				
 				config.set("party.serverSwitched", "&7Die Party hat den Server &e%server% &abetreten&7.");
 				
@@ -101,7 +109,7 @@ public class FileManager {
 				config.set("party.chat.recieved", "&cPARTY &8|&7 %sender% &6> &7Du&a:&7 ");
 				
 				//----------------------------------------------FRIENDS MESSAGES---------------------------------------------------------//
-				config.set("friends.prefix", "&8[&cFreunde§8] ");
+				config.set("friends.prefix", "&8[&cFreunde&8] ");
 				config.set("friends.syntax", "&cBenutze&8: &e/friend ");
 				
 				config.set("friends.help", "&7\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\n"

@@ -1,5 +1,6 @@
 package eu.crackscout.partynfriends.handlers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.config.Configuration;
 
 public class Party{
 
@@ -27,26 +29,30 @@ public class Party{
 		this.players.add(owner);
 		
 		plugin.getPartyManager().getParties().add(this);
-
-//		MAX PARTY LIMIT PERMISSIONS AND SHIT		
-//				
-//		this.maxSize = Main.standart;
-//		if (owner.hasPermission("party.premium")) {
-//			this.maxSize = Main.premium;
-//		}
-//		if (owner.hasPermission("party.youtuber")) {
-//			this.maxSize = Main.youtuber;
-//		}		
 	}
 	
 	public boolean isOwner(ProxiedPlayer player) { return this.owner == player; }
 	
 	public ProxiedPlayer getOwner() { return this.owner; }
 	
+	
 	public void setOwner(ProxiedPlayer player) { this.owner = player; }
 	
 	public List<ProxiedPlayer> getPlayers() { return this.players; }
-		
+
+	public Integer getMaxSize(ProxiedPlayer owner) throws IOException {
+		Configuration cfg = plugin.getConfConfig();
+		Configuration ranks = cfg.getSection("values.parties.size");
+		for(String key : ranks.getKeys()) {
+			int value = ranks.getInt(key);
+			if(owner.hasPermission(key)) {
+				return value;
+			}
+			return 5;
+		}
+		return 5;
+	}
+	
 	public void chatToParty(Party party, String message) {
 		for (ProxiedPlayer member : party.getPlayers()) { PartyManager.getInstance().sendMessage(member, message); }
 	}
@@ -82,14 +88,14 @@ public class Party{
 		this.plugin.getPartyManager().getParties().remove(this);
 	}
 	
-	public void invitePlayer(ProxiedPlayer player) {
+	public void invitePlayer(ProxiedPlayer player, ProxiedPlayer sender) {
 		if(this.players.size() == this.maxSize) {
-			PartyManager.getInstance().sendMessage(player, Message.party_maxPlayer());
+			PartyManager.getInstance().sendMessage(sender, Message.party_maxPlayer());
 			return;
 		}
 		TextComponent acceptTc = Message.getInstance().createComponent(Message.party_ACCEPT(), "/party accept");
 		TextComponent denyTc = Message.getInstance().createComponent(Message.party_DENY(), "/party deny");
-		TextComponent tc = new TextComponent(Message.party_targetInvited(owner.getName()) + "\n");
+		TextComponent tc = new TextComponent(Message.party_targetInvited(sender.getName() + "\n"));
 		tc.addExtra(acceptTc);
 		tc.addExtra(ChatColor.GRAY + " - ");
 		tc.addExtra(denyTc);
