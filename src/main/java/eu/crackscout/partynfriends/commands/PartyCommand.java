@@ -1,5 +1,7 @@
 package eu.crackscout.partynfriends.commands;
 
+import java.io.IOException;
+
 import eu.crackscout.partynfriends.Main;
 import eu.crackscout.partynfriends.handlers.Party;
 import eu.crackscout.partynfriends.utils.Message;
@@ -18,7 +20,6 @@ public class PartyCommand extends Command{
 	public PartyCommand(Main plugin) { super("party"); this.plugin = plugin; }
 
 	static BaseComponent[] partyNone = Message.party_noParty();
-	static BaseComponent[] partyPlayerList = Message.party_listPlayer();
 	static BaseComponent[] partyNoInvite= Message.party_noInvite();
 	static BaseComponent[] partyInviteAccepted = Message.party_accepted();
 	static BaseComponent[] partyInviteDenied = Message.party_denied();
@@ -41,7 +42,11 @@ public class PartyCommand extends Command{
 					return;
 				}
 				Party party = this.plugin.getPartyManager().getPartyPlayers().get(player);
-				PartyManager.getInstance().sendMessage(player, partyPlayerList);
+				try {
+					PartyManager.getInstance().sendMessage(player, Message.party_listPlayer(party.getPlayers().size()+"/" + party.getMaxSize(party.getOwner())));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				for (ProxiedPlayer member : party.getPlayers()) {
 					PartyManager.getInstance().sendMessage(player, ChatColor.GRAY+"- " + member.getName());
 				}
@@ -118,7 +123,7 @@ public class PartyCommand extends Command{
 						return;
 					}
 					PartyManager.getInstance().sendMessage(player, Message.party_invited(target.getName()));
-					party.invitePlayer(target);
+					party.invitePlayer(target, player);
 					return;
 				}
 				PartyManager.getInstance().sendMessage(player, noLeader);

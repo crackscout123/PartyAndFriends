@@ -2,6 +2,8 @@ package eu.crackscout.partynfriends;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import eu.crackscout.partynfriends.commands.FriendsCommand;
 import eu.crackscout.partynfriends.commands.PartyCommand;
@@ -44,6 +46,8 @@ public class Main extends Plugin {
 	private Message message;
 	public Message getMessage() { return this.message; }
 	
+	public static Map<String, Integer> RankMap = new HashMap<>();
+	
 	void initCommands() {
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, (Command)new FriendsCommand(this));		
 		ProxyServer.getInstance().getPluginManager().registerCommand(this, (Command)new PartyCommand(this));		
@@ -74,6 +78,14 @@ public class Main extends Plugin {
 		}
 	}
 	
+	public static void initRanks(Map<String, Integer> map, Configuration cfg) {
+		Configuration ranks = cfg.getSection("values.parties.size");
+		for(String key : ranks.getKeys()) {
+			int value = ranks.getInt(key);
+			map.put(key, value);
+		}
+	}
+	
 	private void createDefaultConfigs() {
 		String dbType = "sqlite"; //default in case config is broken
 
@@ -87,6 +99,7 @@ public class Main extends Plugin {
       Configuration cfg = this.getConfConfig();
       dbType = ("sqlite".equals(cfg.getString("database.type")) || "mysql".equals(cfg.getString("database.type"))) ? cfg.getString("database.type") : "sqlite";
       DatabaseManager.init(this, dbType);
+      initRanks(RankMap, cfg);
     } catch (IOException e1) {
       e1.printStackTrace();
 		}
