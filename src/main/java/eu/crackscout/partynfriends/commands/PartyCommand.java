@@ -123,7 +123,7 @@ public class PartyCommand extends Command{
 						return;
 					}
 					PartyManager.getInstance().sendMessage(player, Message.party_invited(target.getName()));
-					party.invitePlayer(target, player);
+					party.invitePlayer(target, player); //Issue #10 is happening somewhere here... check it!!!!!!
 					return;
 				}
 				PartyManager.getInstance().sendMessage(player, noLeader);
