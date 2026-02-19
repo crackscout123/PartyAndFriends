@@ -21,6 +21,9 @@ public class FileManager {
 		this.confFile = confFile;
     }
 		
+    /**
+     * 
+     */
     public void createDefaults() {
         try {
             // Erstelle Plugin-Ordner
@@ -45,11 +48,7 @@ public class FileManager {
                 config.set("values.parties.size.placeholderONE", 10);
                 config.set("values.parties.size.placeholderTWO", 15);
                 config.set("values.parties.size.placeholderTHREE", 20);
-                //TODO: maybe make it a catch so the user can add unlimited types of "ranks" 
-                /*
-                 * maybe something like
-                 * 
-                 * */
+
                 saveConfig(config, confFile);
             }
 
@@ -98,7 +97,7 @@ public class FileManager {
 				config.set("party.maxPlayer", "&7Du hast die &cmaximale Anzahl &7an Partymitgliedern erreicht.");
 				config.set("party.playerJoined", "&e%player%&7 ist der Party beigetreten!");
 				config.set("party.playerLeft", "&7Der Spieler&e %player% &7hat die Party &cverlassen&7.");
-				config.set("party.disbanned", "&7Die Party wurde &caufgelöst.");
+				config.set("party.disbanned", "&7Die Party wurde &caufgelï¿½st.");
 				
 				config.set("party.serverSwitched", "&7Die Party hat den Server &e%server% &abetreten&7.");
 				
