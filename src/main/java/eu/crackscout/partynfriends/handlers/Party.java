@@ -18,7 +18,6 @@ public class Party{
 	private Main plugin;
 	private ProxiedPlayer owner;
 	private List<ProxiedPlayer> players;
-	private int maxSize = 10; // CHANGE ME TO READ CONFIG FILE
 	
 	public Party(Main plugin, ProxiedPlayer owner) { 
 		
@@ -89,9 +88,13 @@ public class Party{
 	}
 	
 	public void invitePlayer(ProxiedPlayer player, ProxiedPlayer sender) {
-		if(this.players.size() == this.maxSize) {
-			PartyManager.getInstance().sendMessage(sender, Message.party_maxPlayer());
-			return;
+		try {
+			if (this.players.size() == getMaxSize(owner)) {
+				PartyManager.getInstance().sendMessage(sender, Message.party_maxPlayer());
+				return;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		TextComponent acceptTc = Message.getInstance().createComponent(Message.party_ACCEPT(), "/party accept");
 		TextComponent denyTc = Message.getInstance().createComponent(Message.party_DENY(), "/party deny");
